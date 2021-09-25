@@ -83,7 +83,7 @@ async function main() {
 
   let state: State = {
     p: [0, 0],
-    v: [10, 5],
+    v: [100, 0],
   }
 
   const viewport: Viewport = { context, w, h }
@@ -98,8 +98,8 @@ async function main() {
       state = {
         ...state,
         v: [
-          clamp(state.v[0] + e.deltaX / 10, -100, 100),
-          clamp(state.v[1] + e.deltaY / 10, -100, 100),
+          clamp(state.v[0] + e.deltaX / 10, -200, 200),
+          clamp(state.v[1] + e.deltaY / 10, -200, 200),
         ],
       }
     },
