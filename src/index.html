@@ -12,33 +12,14 @@
       referrerpolicy="no-referrer"
     />
     <style>
-      body {
-        background-color: #333;
-        color: #eee;
-      }
-      #scroll-container {
-        height: calc(100vh * 10);
-      }
-      #name-container {
-        position: fixed;
+      canvas {
+        display: block;
         width: 100vw;
         height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #name {
-        font-size: 60px;
-      }
-      #name .letter {
-        display: inline-block;
       }
     </style>
   </head>
   <body>
-    <div id="name-container">
-      <div id="name"></div>
-    </div>
-    <div id="scroll-container"></div>
+    <canvas></canvas>
   </body>
 </html>
