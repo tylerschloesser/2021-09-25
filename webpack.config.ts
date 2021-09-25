@@ -23,6 +23,7 @@ module.exports = <webpack.Configuration>{
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      hash: true,
     }),
   ],
 }
