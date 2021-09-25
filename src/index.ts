@@ -1,16 +1,13 @@
 import random from 'lodash/random'
 
 function main() {
-  // document.addEventListener('scroll', () => {
-  //   //console.log(window.scrollY)
-  // })
-
   const name = document.getElementById('name')!
   'Tyler Schloesser'.split('').forEach((c) => {
     const span = document.createElement('span')
     span.innerText = c
     span.dataset.dx = random(100).toString()
     span.dataset.dy = random(100).toString()
+    span.dataset.dr = random(100).toString()
 
     name.appendChild(span)
   })
