@@ -20,14 +20,14 @@ function drawCircle({ context }: Viewport, c: Vec2, r: number) {
 }
 
 function blink(viewport: Viewport, state: State, timestamp: number) {
-  const dt = timestamp % 2000
+  let dt = timestamp % 2000
   if (dt > 1000) {
     return
   }
-  const scale = dt / 1000
+  dt /= 1000
 
-  viewport.context.fillStyle = `rgba(255,255,255,${(1 - scale) * 0.4})`
-  drawCircle(viewport, [0, 0], 20 + 20 * scale)
+  viewport.context.fillStyle = `rgba(255,255,255,${(1 - dt) * 0.4})`
+  drawCircle(viewport, [0, 0], 20 + 20 * dt)
 }
 
 function draw(viewport: Viewport, state: State, timestamp: number) {
