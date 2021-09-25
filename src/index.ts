@@ -27,7 +27,7 @@ function blink(viewport: Viewport, state: State, timestamp: number) {
   const scale = dt / 1000
 
   viewport.context.fillStyle = `rgba(255,255,255,${(1 - scale) * 0.4})`
-  drawCircle(viewport, [0, 0], 10 + 10 * scale)
+  drawCircle(viewport, [0, 0], 20 + 20 * scale)
 }
 
 function draw(viewport: Viewport, state: State, timestamp: number) {
@@ -57,7 +57,7 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   blink(viewport, state, timestamp)
 
   context.fillStyle = 'white'
-  drawCircle(viewport, [0, 0], 10)
+  drawCircle(viewport, [0, 0], 20)
 
   context.resetTransform()
 
