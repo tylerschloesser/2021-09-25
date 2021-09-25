@@ -42,14 +42,16 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
 
   context.strokeStyle = 'white'
   context.beginPath()
-  for (let i = 0; i < 10; i++) {
-    context.moveTo(0, i * (h / 10))
-    context.lineTo(w, i * (h / 10))
+  context.translate(state.p[0] % (w/10), state.p[1] % (h/10))
+  for (let i = -1; i <= 11; i++) {
+    context.moveTo(-w/10, i * (h / 10))
+    context.lineTo(w+w/10, i * (h / 10))
 
-    context.moveTo(i * (w / 10), 0)
-    context.lineTo(i * (w / 10), h)
+    context.moveTo(i * (w / 10), -h/10)
+    context.lineTo(i * (w / 10), h+h/10)
   }
   context.stroke()
+  context.resetTransform()
 
   context.translate(w/2, h/2)
   blink(viewport, state, timestamp)
@@ -79,7 +81,7 @@ async function main() {
 
   let state: State = {
     p: [0, 0],
-    v: [1, 0],
+    v: [10, 5],
   }
 
   const viewport: Viewport = { context, w, h }
