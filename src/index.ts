@@ -111,6 +111,14 @@ async function main() {
   let last = performance.now()
 
   document.addEventListener(
+    'touchmove',
+    (e) => {
+      e.preventDefault()
+    },
+    { passive: false },
+  )
+
+  document.addEventListener(
     'wheel',
     (e) => {
       e.preventDefault()
