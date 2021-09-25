@@ -36,11 +36,11 @@ function main() {
 
     const scale = 1 - dt
     letters.forEach((span) => {
-      const dx = parseInt(span.dataset.dx!)
-      const dy = parseInt(span.dataset.dy!)
-      const dr = parseInt(span.dataset.dr!)
+      const dx = (1 - parseInt(span.dataset.dx!) / 50) * 20
+      const dy = (1 - parseInt(span.dataset.dy!) / 50) * 20
+      const dr = parseInt(span.dataset.dr!) / 100
 
-      const translate = `translate(${dx * scale}px, ${dy * scale}px)`
+      const translate = `translate(${dx * scale}vmin, ${dy * scale}vmin)`
       const rotate = `rotate(${dr * scale * Math.PI * 2}rad)`
       span.style.transform = `${translate} ${rotate}`
     })
