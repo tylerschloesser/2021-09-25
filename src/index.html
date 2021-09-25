@@ -20,9 +20,21 @@
       #root {
         height: calc(100vh * 10);
       }
+      #name-container {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="name-container">
+        <div id="name"></div>
+      </div>
+    </div>
   </body>
 </html>

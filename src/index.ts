@@ -3,17 +3,12 @@ function main() {
     //console.log(window.scrollY)
   })
 
-  const name = 'Tyler Schloesser'
-  const nameContainer = document.createElement('div')
-
-  name.split('').forEach((c) => {
+  const name = document.getElementById('name')!
+  'Tyler Schloesser'.split('').forEach((c) => {
     const span = document.createElement('span')
     span.innerText = c
-    nameContainer.appendChild(span)
+    name.appendChild(span)
   })
-
-  const root = document.getElementById('root')!
-  root.appendChild(nameContainer)
 }
 
 main()
