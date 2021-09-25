@@ -40,9 +40,9 @@ function main() {
       const dy = parseInt(span.dataset.dy!)
       const dr = parseInt(span.dataset.dr!)
 
-      span.style.transform = `translate(${dx * scale}px, ${
-        dy * scale
-      }px) rotate(${dr * scale * Math.PI * 2}rad)`
+      const translate = `translate(${dx * scale}px, ${dy * scale}px)`
+      const rotate = `rotate(${dr * scale * Math.PI * 2}rad)`
+      span.style.transform = `${translate} ${rotate}`
     })
 
     window.requestAnimationFrame(shift)
