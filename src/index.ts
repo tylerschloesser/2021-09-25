@@ -37,24 +37,31 @@ function blink(viewport: Viewport, state: State, timestamp: number) {
 }
 
 function draw(viewport: Viewport, state: State, timestamp: number) {
-  const { context, w, h } = viewport
+  const { context, w, h, scale } = viewport
 
   context.clearRect(0, 0, w, h)
   context.fillStyle = '#333'
   context.fillRect(0, 0, w, h)
 
+  const lineScale = scale * 10
+  const lineCount = [Math.floor(w / lineScale), Math.floor(h / lineScale)]
+
   context.strokeStyle = 'white'
   context.beginPath()
-  context.translate((state.p[0] % (w / 10)) * -1, (state.p[1] % (h / 10)) * -1)
-
+  context.translate(
+    (state.p[0] % lineScale) * -1,
+    (state.p[1] % lineScale) * -1,
+  )
   context.strokeStyle = '#555'
   context.lineWidth = 2
-  for (let i = -1; i <= 11; i++) {
-    context.moveTo(-w / 10, i * (h / 10))
-    context.lineTo(w + w / 10, i * (h / 10))
 
-    context.moveTo(i * (w / 10), -h / 10)
-    context.lineTo(i * (w / 10), h + h / 10)
+  for (let i = -1; i <= lineCount[0] + 1; i++) {
+    context.moveTo(i * lineScale, -lineScale)
+    context.lineTo(i * lineScale, h + lineScale)
+  }
+  for (let i = -1; i <= lineCount[1] + 1; i++) {
+    context.moveTo(-lineScale, i * lineScale)
+    context.lineTo(w + lineScale, i * lineScale)
   }
   context.stroke()
   context.resetTransform()
@@ -63,11 +70,11 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   blink(viewport, state, timestamp)
 
   context.fillStyle = 'white'
-  drawCircle(viewport, [0, 0], viewport.scale * state.r)
+  drawCircle(viewport, [0, 0], scale * state.r)
 
   context.resetTransform()
 
-  context.font = `${viewport.scale * 4}px monospace`
+  context.font = `${scale * 4}px monospace`
   context.textBaseline = 'top'
   context.fillText(
     `p: [${state.p[0].toFixed(2)}, ${state.p[1].toFixed(2)}]`,
