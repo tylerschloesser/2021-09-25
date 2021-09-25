@@ -1,4 +1,4 @@
-
+import { clamp } from 'lodash'
 
 type Vec2 = [number, number]
 
@@ -20,20 +20,17 @@ function drawCircle({ context }: Viewport, c: Vec2, r: number) {
 }
 
 function blink(viewport: Viewport, state: State, timestamp: number) {
-
   const dt = timestamp % 2000
   if (dt > 1000) {
     return
   }
   const scale = dt / 1000
 
-  viewport.context.fillStyle = `rgba(255,255,255,${(1-scale) * .4})`
+  viewport.context.fillStyle = `rgba(255,255,255,${(1 - scale) * 0.4})`
   drawCircle(viewport, [0, 0], 10 + 10 * scale)
 }
 
 function draw(viewport: Viewport, state: State, timestamp: number) {
-
-
   const { context, w, h } = viewport
 
   context.clearRect(0, 0, w, h)
@@ -42,18 +39,18 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
 
   context.strokeStyle = 'white'
   context.beginPath()
-  context.translate(state.p[0] % (w/10) * -1, state.p[1] % (h/10) * -1)
+  context.translate((state.p[0] % (w / 10)) * -1, (state.p[1] % (h / 10)) * -1)
   for (let i = -1; i <= 11; i++) {
-    context.moveTo(-w/10, i * (h / 10))
-    context.lineTo(w+w/10, i * (h / 10))
+    context.moveTo(-w / 10, i * (h / 10))
+    context.lineTo(w + w / 10, i * (h / 10))
 
-    context.moveTo(i * (w / 10), -h/10)
-    context.lineTo(i * (w / 10), h+h/10)
+    context.moveTo(i * (w / 10), -h / 10)
+    context.lineTo(i * (w / 10), h + h / 10)
   }
   context.stroke()
   context.resetTransform()
 
-  context.translate(w/2, h/2)
+  context.translate(w / 2, h / 2)
   blink(viewport, state, timestamp)
 
   context.fillStyle = 'white'
@@ -65,19 +62,21 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   context.textBaseline = 'top'
   context.fillText(`[${state.p[0].toFixed(2)}, ${state.p[1].toFixed(2)}]`, 0, 0)
 
+  context.fillText(
+    `[${state.v[0].toFixed(2)}, ${state.v[1].toFixed(2)}]`,
+    0,
+    20,
+  )
 }
 
 async function main() {
-
   const canvas = document.querySelector('canvas')!
   const context = canvas.getContext('2d')!
-
 
   const w = canvas.width
   const h = canvas.height
 
   console.log({ w, h })
-
 
   let state: State = {
     p: [0, 0],
@@ -88,23 +87,21 @@ async function main() {
 
   let last = performance.now()
 
-  // document.addEventListener('touchstart', e => {
-  //   console.log(e)
-  // })
+  document.addEventListener(
+    'wheel',
+    (e) => {
+      e.preventDefault()
 
-  document.addEventListener('wheel', (e) => {
-    e.preventDefault()
-    console.log(e.deltaX, e.deltaY)
-
-    state = {
-      ...state,
-      v: [
-        state.v[0] + e.deltaX / 10,
-        state.v[1] + e.deltaY / 10,
-      ],
-    }
-  }, { passive: false })
-
+      state = {
+        ...state,
+        v: [
+          clamp(state.v[0] + e.deltaX / 10, -100, 100),
+          clamp(state.v[1] + e.deltaY / 10, -100, 100),
+        ],
+      }
+    },
+    { passive: false },
+  )
 
   const game = (timestamp: number) => {
     const elapsed = timestamp - last
