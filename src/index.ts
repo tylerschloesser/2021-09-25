@@ -67,14 +67,14 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
 
   context.resetTransform()
 
-  context.font = '10px monospace'
+  context.font = `${viewport.scale * 4}px monospace`
   context.textBaseline = 'top'
   context.fillText(`[${state.p[0].toFixed(2)}, ${state.p[1].toFixed(2)}]`, 0, 0)
 
   context.fillText(
     `[${state.v[0].toFixed(2)}, ${state.v[1].toFixed(2)}]`,
     0,
-    20,
+    viewport.scale * 4 * 1.5,
   )
 }
 
