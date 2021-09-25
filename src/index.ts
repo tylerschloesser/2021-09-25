@@ -110,13 +110,43 @@ async function main() {
 
   let last = performance.now()
 
+  let lastTouch: Touch | null = null
+
   document.addEventListener(
     'touchmove',
     (e) => {
       e.preventDefault()
+      if (e.touches.length !== 1) {
+        return
+      }
+      const touch = e.touches.item(0)!
+      if (lastTouch === null) {
+        lastTouch = touch
+        return
+      }
+
+      const dx = (lastTouch.clientX - touch.clientX) * -1
+      const dy = (lastTouch.clientY - touch.clientY) * -1
+
+      lastTouch = touch
+
+      state = {
+        ...state,
+        v: [
+          clamp(state.v[0] + dx / 1, -200, 200),
+          clamp(state.v[1] + dy / 1, -200, 200),
+        ],
+      }
     },
     { passive: false },
   )
+
+  document.addEventListener('touchend', () => {
+    lastTouch = null
+  })
+  document.addEventListener('touchcancel', () => {
+    lastTouch = null
+  })
 
   document.addEventListener(
     'wheel',
