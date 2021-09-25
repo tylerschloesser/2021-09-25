@@ -42,7 +42,7 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
 
   context.strokeStyle = 'white'
   context.beginPath()
-  context.translate(state.p[0] % (w/10), state.p[1] % (h/10))
+  context.translate(state.p[0] % (w/10) * -1, state.p[1] % (h/10) * -1)
   for (let i = -1; i <= 11; i++) {
     context.moveTo(-w/10, i * (h / 10))
     context.lineTo(w+w/10, i * (h / 10))
@@ -87,6 +87,23 @@ async function main() {
   const viewport: Viewport = { context, w, h }
 
   let last = performance.now()
+
+  // document.addEventListener('touchstart', e => {
+  //   console.log(e)
+  // })
+
+  document.addEventListener('wheel', (e) => {
+    e.preventDefault()
+    console.log(e.deltaX, e.deltaY)
+
+    state = {
+      ...state,
+      v: [
+        state.v[0] + e.deltaX / 10,
+        state.v[1] + e.deltaY / 10,
+      ],
+    }
+  }, { passive: false })
 
 
   const game = (timestamp: number) => {
