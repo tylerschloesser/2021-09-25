@@ -13,11 +13,8 @@
     />
     <style>
       body {
-        background-color: #333;
-        color: #eee;
-        font-size: 10vmin;
       }
-      #root {
+      #scroll-container {
         height: calc(100vh * 10);
       }
       #name-container {
@@ -28,13 +25,15 @@
         justify-content: center;
         align-items: center;
       }
+      #name {
+        font-size: 60px;
+      }
     </style>
   </head>
   <body>
-    <div id="root">
-      <div id="name-container">
-        <div id="name"></div>
-      </div>
+    <div id="name-container">
+      <div id="name"></div>
     </div>
+    <div id="scroll-container"></div>
   </body>
 </html>

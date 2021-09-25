@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/tylerschloesser/2021-09-25#readme",
   "dependencies": {
+    "@types/lodash": "^4.14.174",
     "@types/webpack-dev-server": "^4.1.0",
     "html-webpack-plugin": "^5.3.2",
+    "lodash": "^4.17.21",
     "prettier": "^2.4.1",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.2.1",
