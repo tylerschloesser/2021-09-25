@@ -4,6 +4,7 @@ type Vec2 = [number, number]
 
 interface State {
   p: Vec2
+  v: Vec2
 }
 
 interface Viewport {
@@ -32,6 +33,7 @@ function blink(viewport: Viewport, state: State, timestamp: number) {
 
 function draw(viewport: Viewport, state: State, timestamp: number) {
 
+
   const { context, w, h } = viewport
 
   context.clearRect(0, 0, w, h)
@@ -58,7 +60,7 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   context.resetTransform()
 
   context.textBaseline = 'top'
-  context.fillText(`[${state.p[0]}, ${state.p[1]}]`, 0, 0)
+  context.fillText(`[${state.p[0].toFixed(2)}, ${state.p[1].toFixed(2)}]`, 0, 0)
 
 }
 
@@ -74,13 +76,28 @@ async function main() {
   console.log({ w, h })
 
 
-  const state: State = {
+  let state: State = {
     p: [0, 0],
+    v: [1, 0],
   }
 
   const viewport: Viewport = { context, w, h }
 
+  let last = performance.now()
+
+
   const game = (timestamp: number) => {
+    const elapsed = timestamp - last
+    last = timestamp
+
+    state = {
+      ...state,
+      p: [
+        state.p[0] + state.v[0] * (elapsed / 1000),
+        state.p[1] + state.v[1] * (elapsed / 1000),
+      ],
+    }
+
     draw(viewport, state, timestamp)
     window.requestAnimationFrame(game)
   }
