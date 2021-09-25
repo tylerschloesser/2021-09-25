@@ -5,12 +5,14 @@ type Vec2 = [number, number]
 interface State {
   p: Vec2
   v: Vec2
+  r: number
 }
 
 interface Viewport {
   context: CanvasRenderingContext2D
   w: number
   h: number
+  scale: number
 }
 
 function drawCircle({ context }: Viewport, c: Vec2, r: number) {
@@ -27,7 +29,11 @@ function blink(viewport: Viewport, state: State, timestamp: number) {
   dt /= 1000
 
   viewport.context.fillStyle = `rgba(255,255,255,${(1 - dt) * 0.4})`
-  drawCircle(viewport, [0, 0], 20 + 20 * dt)
+  drawCircle(
+    viewport,
+    [0, 0],
+    viewport.scale * state.r + viewport.scale * state.r * dt,
+  )
 }
 
 function draw(viewport: Viewport, state: State, timestamp: number) {
@@ -57,7 +63,7 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   blink(viewport, state, timestamp)
 
   context.fillStyle = 'white'
-  drawCircle(viewport, [0, 0], 20)
+  drawCircle(viewport, [0, 0], viewport.scale * state.r)
 
   context.resetTransform()
 
@@ -76,17 +82,20 @@ async function main() {
   const canvas = document.querySelector('canvas')!
   const context = canvas.getContext('2d')!
 
-  const w = canvas.width = canvas.clientWidth
-  const h = canvas.height = canvas.clientHeight
+  const w = (canvas.width = canvas.clientWidth)
+  const h = (canvas.height = canvas.clientHeight)
 
-  console.log({ w, h })
+  const scale = Math.min(w, h) / 100
+
+  console.log({ w, h, scale })
 
   let state: State = {
     p: [0, 0],
     v: [100, 0],
+    r: 4,
   }
 
-  const viewport: Viewport = { context, w, h }
+  const viewport: Viewport = { context, w, h, scale }
 
   let last = performance.now()
 
