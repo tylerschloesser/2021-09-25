@@ -57,6 +57,9 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
 
   context.resetTransform()
 
+  context.textBaseline = 'top'
+  context.fillText(`[${state.p[0]}, ${state.p[1]}]`, 0, 0)
+
 }
 
 async function main() {
