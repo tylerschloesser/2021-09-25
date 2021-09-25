@@ -18,7 +18,17 @@ function drawCircle({ context }: Viewport, c: Vec2, r: number) {
   context.fill()
 }
 
-function draw(viewport: Viewport, state: State) {
+function blink(viewport: Viewport, state: State, timestamp: number) {
+
+  const dt = timestamp % 2000
+  if (dt > 1000) {
+    return
+  }
+  viewport.context.fillStyle = 'rgba(0,0,0,.5)'
+  drawCircle(viewport, [0, 0], 20)
+}
+
+function draw(viewport: Viewport, state: State, timestamp: number) {
 
   const { context, w, h } = viewport
 
@@ -27,10 +37,12 @@ function draw(viewport: Viewport, state: State) {
   context.fillRect(0, 0, w, h)
 
   
-  context.fillStyle = 'white'
-
   context.translate(w/2, h/2)
+  blink(viewport, state, timestamp)
+
+  context.fillStyle = 'white'
   drawCircle(viewport, [0, 0], 10)
+
   context.resetTransform()
 
 
@@ -55,7 +67,7 @@ async function main() {
   const viewport: Viewport = { context, w, h }
 
   const game = (timestamp: number) => {
-    draw(viewport, state)
+    draw(viewport, state, timestamp)
     window.requestAnimationFrame(game)
   }
   window.requestAnimationFrame(game)
