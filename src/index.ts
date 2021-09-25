@@ -26,7 +26,7 @@ function blink(viewport: Viewport, state: State, timestamp: number) {
   }
   const scale = dt / 1000
 
-  viewport.context.fillStyle = `rgba(255,255,255,${(1-scale) * .6})`
+  viewport.context.fillStyle = `rgba(255,255,255,${(1-scale) * .4})`
   drawCircle(viewport, [0, 0], 10 + 10 * scale)
 }
 
