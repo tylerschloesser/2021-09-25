@@ -24,8 +24,10 @@ function blink(viewport: Viewport, state: State, timestamp: number) {
   if (dt > 1000) {
     return
   }
-  viewport.context.fillStyle = 'rgba(0,0,0,.5)'
-  drawCircle(viewport, [0, 0], 20)
+  const scale = dt / 1000
+
+  viewport.context.fillStyle = `rgba(255,255,255,${(1-scale) * .6})`
+  drawCircle(viewport, [0, 0], 10 + 10 * scale)
 }
 
 function draw(viewport: Viewport, state: State, timestamp: number) {
