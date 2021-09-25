@@ -38,7 +38,17 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   context.fillStyle = '#333'
   context.fillRect(0, 0, w, h)
 
-  
+  context.strokeStyle = 'white'
+  context.beginPath()
+  for (let i = 0; i < 10; i++) {
+    context.moveTo(0, i * (h / 10))
+    context.lineTo(w, i * (h / 10))
+
+    context.moveTo(i * (w / 10), 0)
+    context.lineTo(i * (w / 10), h)
+  }
+  context.stroke()
+
   context.translate(w/2, h/2)
   blink(viewport, state, timestamp)
 
@@ -46,7 +56,6 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   drawCircle(viewport, [0, 0], 10)
 
   context.resetTransform()
-
 
 }
 
