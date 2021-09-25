@@ -40,6 +40,9 @@ function draw(viewport: Viewport, state: State, timestamp: number) {
   context.strokeStyle = 'white'
   context.beginPath()
   context.translate((state.p[0] % (w / 10)) * -1, (state.p[1] % (h / 10)) * -1)
+
+  context.strokeStyle = '#555'
+  context.lineWidth = 2
   for (let i = -1; i <= 11; i++) {
     context.moveTo(-w / 10, i * (h / 10))
     context.lineTo(w + w / 10, i * (h / 10))
@@ -73,8 +76,8 @@ async function main() {
   const canvas = document.querySelector('canvas')!
   const context = canvas.getContext('2d')!
 
-  const w = canvas.width
-  const h = canvas.height
+  const w = canvas.width = canvas.clientWidth
+  const h = canvas.height = canvas.clientHeight
 
   console.log({ w, h })
 
