@@ -93,8 +93,8 @@ async function main() {
   const canvas = document.querySelector('canvas')!
   const context = canvas.getContext('2d')!
 
-  const w = (canvas.width = canvas.clientWidth)
-  const h = (canvas.height = canvas.clientHeight)
+  const w = (canvas.width = window.innerWidth)
+  const h = (canvas.height = window.innerHeight)
 
   const scale = Math.min(w, h) / 100
 
